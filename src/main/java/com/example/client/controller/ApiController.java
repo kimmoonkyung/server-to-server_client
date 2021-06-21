@@ -4,10 +4,7 @@ import com.example.client.dto.Req;
 import com.example.client.dto.UserResponse;
 import com.example.client.service.RestTemplateService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/client")
@@ -34,6 +31,11 @@ public class ApiController {
     @GetMapping("/genericExchange")
     public Req<UserResponse> genericExchange(){
         return restTemplateService.genericExchange();
+    }
+
+    @GetMapping("/search")
+    public String naverSearch(@RequestParam String keyword){
+        return restTemplateService.naverSearch(keyword);
     }
 
 }

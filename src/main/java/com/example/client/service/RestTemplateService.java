@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 
 @Service
 @Slf4j
@@ -143,6 +144,34 @@ public class RestTemplateService {
                 = restTemplate.exchange(requestEntity, new ParameterizedTypeReference<Req<UserResponse>>(){});
 
         return response.getBody();
+    }
+
+    public String naverSearch(String keyword){
+        URI uri = UriComponentsBuilder
+                .fromUriString("https://openapi.naver.com")
+                .path("/v1/search/local.json")
+                .queryParam("query", keyword)
+                .queryParam("display", 10)
+                .queryParam("start", 1)
+                .queryParam("sort", "random")
+                .encode(StandardCharsets.UTF_8)
+                .build()
+                .toUri();
+        log.info("## client naver search uri: {}", uri);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        RequestEntity<Void> req = RequestEntity
+                .get(uri)
+                .header("X-Naver-Client-Id", "Cc2S153b3YTw22dnxJru")
+                .header("X-Naver-Client-Secret", "o1Xx7Fn_nz")
+                .build();
+        log.info("naver search RequestEntity: {}",  req);
+
+        ResponseEntity<String> result = restTemplate.exchange(req, String.class);
+
+        return result.getBody();
+
     }
 
 }
