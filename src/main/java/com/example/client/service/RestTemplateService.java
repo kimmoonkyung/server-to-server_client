@@ -70,9 +70,12 @@ public class RestTemplateService {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<UserResponse> response = restTemplate.postForEntity(uri, userResquest, UserResponse.class);
 
-        log.info("resonse getStatusCode: {}", response.getStatusCode());
-        log.info("resonse getHeaders: {}", response.getHeaders());
-        log.info("resonse getBody: {}", response.getBody());
+        log.info("response getStatusCode: {}", response.getStatusCode());
+        log.info("response getHeaders: {}", response.getHeaders());
+        log.info("response getBody: {}", response.getBody());
+        log.info("리스폰스 받은 name: {}" , response.getBody().getName());
+        log.info("리스폰스 받은 age: {}", response.getBody().getAge());
+        log.info("리스폰스 받은 test: {}", response.getBody().getTest());
 
         return response.getBody();
 
